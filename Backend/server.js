@@ -35,32 +35,62 @@ app.post('/merge', upload.array('mypdfs', 2), async function (req, res, next) {
   const d = await mergefunction(p1Path, p2Path);
 
   const mergedPdfPath = path.join(__dirname, 'mergedfiles', `${d}.pdf`);
-
-  // Send the merged PDF as a response
-  res.sendFile(mergedPdfPath, {}, function (err) {
+  // res.download(mergedPdfPath);
+  res.download(mergedPdfPath, {}, function (err) {
     if (err) {
       console.error('Error sending the merged PDF:', err);
       res.status(err.status).end();
     } else {
       // Delete the merged PDF file after it's been served
-      setTimeout(() => {
-        fs.unlink(mergedPdfPath, (unlinkErr) => {
-          if (unlinkErr) {
-            console.error('Error deleting the merged PDF:', unlinkErr);
-          } else {
-            console.log('Merged PDF deleted successfully.');
-          }
-        });
-      }, 1000);
-    }
-
-    res.sendFile(path.join(__dirname,"../Frontend/index.html"));
+      fs.unlink(p1Path, (unlinkErr1) => {
+        if (unlinkErr1) {
+          console.error('Error deleting the path1 PDF:', unlinkErr1);
+        } else {
+          console.log('path1 PDF deleted successfully.');
+        }
+      });
+      fs.unlink(p2Path, (unlinkErr2) => {
+        if (unlinkErr2) {
+          console.error('Error deleting the path2 PDF:', unlinkErr2);
+        } else {
+          console.log('path2 PDF deleted successfully.');
+        }
+      });
+      fs.unlink(mergedPdfPath, (unlinkErr3) => {
+        if (unlinkErr3) {
+          console.error('Error deleting the merged PDF:', unlinkErr3);
+        } else {
+          console.log('Merged PDF deleted successfully.');
+        }
+      });
+    };
   });
 });
 
-app.get('/merge', function (req, res) {
-  res.sendFile(path.join(__dirname,"../Frontend/index.html"));
-})
+  // Send the merged PDF as a response
+  // res.download(mergedPdfPath, {}, function (err) {
+    // if (err) {
+    //   console.error('Error sending the merged PDF:', err);
+    //   res.status(err.status).end();
+    // } else {
+    //   // Delete the merged PDF file after it's been served
+    //   setTimeout(() => {
+    //     fs.unlink(mergedPdfPath, (unlinkErr) => {
+    //       if (unlinkErr) {
+    //         console.error('Error deleting the merged PDF:', unlinkErr);
+    //       } else {
+    //         console.log('Merged PDF deleted successfully.');
+    //       }
+    //     });
+    //   }, 1000);
+
+    //   setTimeout(() => {
+    //     res.redirect('/');
+    //   }, 5000);
+    // }
+  // });
+// });
+
   
 
 
