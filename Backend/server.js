@@ -42,20 +42,20 @@ app.post('/merge', upload.array('mypdfs', 2), async function (req, res, next) {
       res.status(err.status).end();
     } else {
       // Delete the merged PDF file after it's been served
-      fs.unlink(p1Path, (unlinkErr1) => {
-        if (unlinkErr1) {
-          console.error('Error deleting the path1 PDF:', unlinkErr1);
-        } else {
-          console.log('path1 PDF deleted successfully.');
-        }
-      });
-      fs.unlink(p2Path, (unlinkErr2) => {
-        if (unlinkErr2) {
-          console.error('Error deleting the path2 PDF:', unlinkErr2);
-        } else {
-          console.log('path2 PDF deleted successfully.');
-        }
-      });
+      // fs.unlink(p1Path, (unlinkErr1) => {
+      //   if (unlinkErr1) {
+      //     console.error('Error deleting the path1 PDF:', unlinkErr1);
+      //   } else {
+      //     console.log('path1 PDF deleted successfully.');
+      //   }
+      // });
+      // fs.unlink(p2Path, (unlinkErr2) => {
+      //   if (unlinkErr2) {
+      //     console.error('Error deleting the path2 PDF:', unlinkErr2);
+      //   } else {
+      //     console.log('path2 PDF deleted successfully.');
+      //   }
+      // });
       fs.unlink(mergedPdfPath, (unlinkErr3) => {
         if (unlinkErr3) {
           console.error('Error deleting the merged PDF:', unlinkErr3);
